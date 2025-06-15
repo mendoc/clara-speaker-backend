@@ -1,0 +1,32 @@
+{
+  "name": "clara-speaker-backend",
+  "version": "1.0.0",
+  "description": "Fonctions cloud pour Clara Speaker",
+  "main": "index.js",
+  "scripts": {
+    "create": "netlify functions:create",
+    "build": "netlify functions:build",
+    "start": "netlify functions:serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mendoc/clara-speaker-backend.git"
+  },
+  "keywords": [
+    "tts"
+  ],
+  "author": "Dimitri ONGOUA",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mendoc/clara-speaker-backend/issues"
+  },
+  "homepage": "https://github.com/mendoc/clara-speaker-backend#readme",
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "@netlify/functions": "^3.1.10",
+    "@types/node": "^22.15.31",
+    "firebase-admin": "^13.4.0",
+    "googleapis": "^150.0.1",
+    "typescript": "^4.9.5"
+  }
+}
