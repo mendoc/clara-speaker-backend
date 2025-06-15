@@ -103,7 +103,9 @@ export default async (request: Request, context: Context) => {
     for (const messageId of newMessagesIds) {
       const msg = await gmail.users.messages.get({ userId: 'me', id: messageId, format: 'metadata', metadataHeaders: ['From', 'Subject'] });
 
-      if (!msg.data || !msg.data.payload || !msg.data.payload.headers) {
+      console.log("msg", msg);
+
+      if (!msg || !msg.data || !msg.data.payload || !msg.data.payload.headers) {
         console.log(`-> Email ${messageId} n'a pas de données valides. Ignoré.`);
         continue; // On ignore les emails sans données valides
       }
