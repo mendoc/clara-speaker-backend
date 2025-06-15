@@ -103,33 +103,19 @@ export default async (request: Request, context: Context) => {
     for (const messageId of newMessagesIds) {
       const msg = await gmail.users.messages.get({ userId: 'me', id: messageId, format: 'metadata', metadataHeaders: ['From', 'Subject'] });
 
-      console.log("msg", msg);
-
-      if (!msg || !msg.data || !msg.data.payload || !msg.data.payload.headers) {
-        console.log(`-> Email ${messageId} n'a pas de données valides. Ignoré.`);
-        continue; // On ignore les emails sans données valides
+      // On vérifie si le label 'UNREAD' est présent
+      if (msg.data.labelIds && msg.data.labelIds.includes('UNREAD')) {
+        // L'email est bien nouveau ET non lu, on l'ajoute au lot
+        const headers = msg.data.payload.headers;
+        unreadEmailsBatch.push({
+          from: headers.find(h => h.name === 'From').value,
+          subject: headers.find(h => h.name === 'Subject').value,
+        });
+        console.log(`-> Email ${messageId} est non lu. Ajouté au rapport.`);
+      } else {
+        // L'email a déjà été lu, on l'ignore
+        console.log(`-> Email ${messageId} est déjà lu. Ignoré.`);
       }
-
-      // On demande juste les métadonnées pour être plus rapide
-      const headers = msg.data.payload.headers;
-      unreadEmailsBatch.push({
-        from: headers.find(h => h.name === 'From').value,
-        subject: headers.find(h => h.name === 'Subject').value,
-      });
-    }
-
-    // On vérifie si le label 'UNREAD' est présent
-    if (msg.data.labelIds && msg.data.labelIds.includes('UNREAD')) {
-      // L'email est bien nouveau ET non lu, on l'ajoute au lot
-      const headers = msg.data.payload.headers;
-      unreadEmailsBatch.push({
-        from: headers.find(h => h.name === 'From').value,
-        subject: headers.find(h => h.name === 'Subject').value,
-      });
-      console.log(`-> Email ${messageId} est non lu. Ajouté au rapport.`);
-    } else {
-      // L'email a déjà été lu, on l'ignore
-      console.log(`-> Email ${messageId} est déjà lu. Ignoré.`);
     }
 
     // =================================================================
