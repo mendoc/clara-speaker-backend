@@ -52,13 +52,12 @@ export default async (request: Request, context: Context) => {
       // On met à jour Firestore avec cet ID de départ.
       await userRef.update({ lastHistoryId: currentHistoryId });
 
-      const msg = `Initialisation terminée. Le point de départ est fixé à l'History ID : ${currentHistoryId}.`;
-      console.log(msg);
+      console.log(`Initialisation terminée. Le point de départ est fixé à l'History ID : ${currentHistoryId}.`);
       console.log("Le prochain cycle traitera les emails arrivant à partir de maintenant.");
 
       // On arrête l'exécution pour ce cycle.
       return Response.json(
-        { message: msg },
+        { message: `Initialisation terminée. Le point de départ est fixé à l'History ID : ${currentHistoryId}.` },
         { status: 200 }
       );
     }
