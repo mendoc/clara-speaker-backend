@@ -198,3 +198,7 @@ function getEmailBody(payload) {
   }
   return "Contenu non trouvé.";
 }
+
+export const config = {
+  path: "/checkemails",
+};

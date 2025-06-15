@@ -100,3 +100,7 @@ async function sendMessage(deviceToken: string, summary: string) {
     return { success: false, error: error.message };
   }
 }
+
+export const config = {
+  path: "/sendmessage",
+};
