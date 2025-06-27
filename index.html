@@ -1,0 +1,330 @@
+<html>
+
+<head>
+    <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect" />
+    <link as="style"
+        href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter%3Awght%40400%3B500%3B600%3B700%3B900&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900"
+        onload="this.rel='stylesheet'" rel="stylesheet" />
+    <title>Clara Speaker - Résumés d'e-mails audio</title>
+    <link href="data:image/x-icon;base64," rel="icon" type="image/x-icon" />
+    <meta charset="utf-8" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <style type="text/tailwindcss">
+        :root {
+        --primary-color: #0c7ff2;
+        --text-primary: #0d141c;
+        --text-secondary: #49739c;
+        --background-light: #f8fafc;--border-color: #e2e8f0;}
+      .hero-gradient {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.6) 100%),
+          url('banner.png');
+      }
+      .how-it-works-bg {
+        background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBWRqFFzHz-ymEg_8keOoqkBkPJ-W2VzCtEOO_z4w-i8a66TVFkm2LeMHP1Jvw7urtsUjPNNWZsHvbrkeuvHPoAc3V1_EdsAz7kUfTTgBdTf-BbFTmFCPF_5rLFiOtqv0nfZVBJvfZLRN8RcD6_JILKJ9CQANuc99jZqTSkLNV3PmdUZ9EhZ3lS8TLkxpL_C7HI7rGzt4C5WinS03C3shIj-81dHc7BMdkYgY5C7awwRwmS1_9fdhR10eSI2p0ytzlO2U81RrGKu48a");
+      }
+    </style>
+</head>
+
+<body class="bg-slate-50 text-[var(--text-primary)]" style='font-family: Inter, "Noto Sans", sans-serif;'>
+    <div class="relative flex size-full min-h-screen flex-col group/design-root overflow-x-hidden">
+        <div class="layout-container flex h-full grow flex-col">
+            <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md shadow-sm">
+                <div class="container mx-auto flex items-center justify-between whitespace-nowrap px-6 py-4 lg:px-10">
+                    <div class="flex items-center gap-3 text-[var(--text-primary)]">
+                        <div class="size-6 text-[var(--primary-color)]">
+                            <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M36.7273 44C33.9891 44 31.6043 39.8386 30.3636 33.69C29.123 39.8386 26.7382 44 24 44C21.2618 44 18.877 39.8386 17.6364 33.69C16.3957 39.8386 14.0109 44 11.2727 44C7.25611 44 4 35.0457 4 24C4 12.9543 7.25611 4 11.2727 4C14.0109 4 16.3957 8.16144 17.6364 14.31C18.877 8.16144 21.2618 4 24 4C26.7382 4 29.123 8.16144 30.3636 14.31C31.6043 8.16144 33.9891 4 36.7273 4C40.7439 4 44 12.9543 44 24C44 35.0457 40.7439 44 36.7273 44Z"
+                                    fill="currentColor"></path>
+                            </svg>
+                        </div>
+                        <h2 class="text-[var(--text-primary)] text-xl font-bold tracking-tight">Clara Speaker</h2>
+                    </div>
+                    <nav class="hidden md:flex items-center gap-8">
+                        <a class="text-[var(--text-secondary)] hover:text-[var(--primary-color)] text-sm font-medium transition-colors"
+                            href="#how-it-works">Comment ça marche</a>
+                        <a class="text-[var(--text-secondary)] hover:text-[var(--primary-color)] text-sm font-medium transition-colors"
+                            href="#features">Fonctionnalités</a>
+                        <a class="text-[var(--text-secondary)] hover:text-[var(--primary-color)] text-sm font-medium transition-colors"
+                            href="#testimonials">Témoignages</a>
+                    </nav>
+                    <button
+                        class="flex min-w-[100px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-5 bg-[var(--primary-color)] text-slate-50 text-sm font-semibold leading-normal tracking-wide shadow-md hover:bg-blue-600 transition-colors">
+                        <span class="truncate">Bientôt disponible</span>
+                    </button>
+                </div>
+            </header>
+            <main class="flex-1">
+                <section class="hero-gradient bg-cover bg-center bg-no-repeat py-24 sm:py-32 lg:py-40">
+                    <div class="container mx-auto px-6 text-center lg:px-10">
+                        <h1
+                            class="text-white text-4xl font-extrabold leading-tight tracking-tighter sm:text-5xl lg:text-6xl">
+                            Écoutez vos e-mails, ne vous contentez pas de les lire
+                        </h1>
+                        <p class="mt-6 text-slate-200 text-lg font-normal leading-relaxed sm:text-xl max-w-2xl mx-auto">
+                            Clara Speaker transforme votre boîte de réception en résumés audio concis, vous permettant de rester
+                            informé lors de vos déplacements, de réduire le temps d'écran et de prioriser ce qui compte le plus.
+                        </p>
+                        <button
+                            class="mt-10 flex min-w-[120px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-[var(--primary-color)] text-slate-50 text-base font-semibold leading-normal tracking-wide shadow-lg hover:bg-blue-600 transition-colors transform hover:scale-105 mx-auto">
+                            <span class="truncate">Bientôt disponible</span>
+                        </button>
+                    </div>
+                </section>
+                <section class="py-16 sm:py-24 bg-white" id="how-it-works">
+                    <div class="container mx-auto px-6 lg:px-10">
+                        <h2 class="text-3xl font-bold leading-tight tracking-tight text-center mb-12 sm:text-4xl">Comment
+                            fonctionne Clara Speaker</h2>
+                        <div class="w-full aspect-[16/9] rounded-xl shadow-2xl overflow-hidden mx-auto max-w-4xl">
+                            <div class="w-full h-full bg-center bg-no-repeat bg-cover how-it-works-bg"></div>
+                        </div>
+                        <p class="text-center text-[var(--text-secondary)] mt-8 text-lg max-w-3xl mx-auto">
+                            Connectez simplement votre compte de messagerie et l'IA de Clara Speaker résumera intelligemment vos
+                            e-mails. Écoutez-les comme un podcast, à tout moment et en tout lieu.
+                        </p>
+                    </div>
+                </section>
+                <section class="py-16 sm:py-24 bg-[var(--background-light)]" id="features">
+                    <div class="container mx-auto px-6 lg:px-10">
+                        <div class="text-center mb-12">
+                            <h2 class="text-3xl font-bold leading-tight tracking-tight sm:text-4xl">Restez informé,
+                                sans effort</h2>
+                            <p class="text-[var(--text-secondary)] text-lg mt-4 max-w-2xl mx-auto">Clara Speaker offre une
+                                suite de fonctionnalités conçues pour améliorer votre expérience de messagerie.</p>
+                        </div>
+                        <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+                            <div
+                                class="flex flex-col gap-4 rounded-xl border border-[var(--border-color)] bg-white p-6 shadow-lg hover:shadow-xl transition-shadow">
+                                <div class="text-[var(--primary-color)] size-10">
+                                    <svg fill="currentColor" height="40px" viewBox="0 0 256 256" width="40px"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M201.89,62.66A103.43,103.43,0,0,0,128.79,32H128A104,104,0,0,0,24,136v56a24,24,0,0,0,24,24H64a24,24,0,0,0,24-24V152a24,24,0,0,0-24-24H40.36A88,88,0,0,1,128,48h.67a87.71,87.71,0,0,1,87,80H192a24,24,0,0,0-24,24v40a24,24,0,0,0,24,24h16a24,24,0,0,0,24-24V136A103.41,103.41,0,0,0,201.89,62.66ZM64,144a8,8,0,0,1,8,8v40a8,8,0,0,1-8,8H48a8,8,0,0,1-8-8V144Zm152,48a8,8,0,0,1-8,8H192a8,8,0,0,1-8-8V152a8,8,0,0,1,8-8h24Z">
+                                        </path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-semibold">Résumés audio</h3>
+                                    <p class="text-[var(--text-secondary)] text-sm mt-2">Écoutez des résumés audio concis
+                                        de vos e-mails, parfaits pour le multitâche ou en déplacement.</p>
+                                </div>
+                            </div>
+                            <div
+                                class="flex flex-col gap-4 rounded-xl border border-[var(--border-color)] bg-white p-6 shadow-lg hover:shadow-xl transition-shadow">
+                                <div class="text-[var(--primary-color)] size-10">
+                                    <svg fill="currentColor" height="40px" viewBox="0 0 256 256" width="40px"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm64-88a8,8,0,0,1-8,8H128a8,8,0,0,1-8-8V72a8,8,0,0,1,16,0v48h48A8,8,0,0,1,192,128Z">
+                                        </path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-semibold">Gain de temps</h3>
+                                    <p class="text-[var(--text-secondary)] text-sm mt-2">Traitez rapidement votre boîte de
+                                        réception et concentrez-vous sur l'essentiel, ce qui vous fera gagner un temps précieux.</p>
+                                </div>
+                            </div>
+                            <div
+                                class="flex flex-col gap-4 rounded-xl border border-[var(--border-color)] bg-white p-6 shadow-lg hover:shadow-xl transition-shadow">
+                                <div class="text-[var(--primary-color)] size-10">
+                                    <svg fill="currentColor" height="40px" viewBox="0 0 256 256" width="40px"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M80,64a8,8,0,0,1,8-8H216a8,8,0,0,1,0,16H88A8,8,0,0,1,80,64Zm136,56H88a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Zm0,64H88a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16ZM44,52A12,12,0,1,0,56,64,12,12,0,0,0,44,52Zm0,64a12,12,0,1,0,12,12A12,12,0,0,0,44,116Zm0,64a12,12,0,1,0,12,12A12,12,0,0,0,44,180Z">
+                                        </path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-semibold">Informations prioritaires</h3>
+                                    <p class="text-[var(--text-secondary)] text-sm mt-2">Clara Speaker vous aide à identifier
+                                        et à prioriser les informations clés, vous assurant de ne jamais manquer les mises à jour importantes.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="py-16 sm:py-24 bg-white" id="testimonials">
+                    <div class="container mx-auto px-6 lg:px-10">
+                        <h2 class="text-3xl font-bold leading-tight tracking-tight text-center mb-12 sm:text-4xl">Ce que
+                            les utilisateurs disent</h2>
+                        <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+                            <div
+                                class="flex flex-col gap-4 rounded-xl border border-[var(--border-color)] bg-[var(--background-light)] p-6 shadow-lg">
+                                <div class="flex items-center gap-3">
+                                    <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-12 shadow-md"
+                                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDDPdhd5fnMo3qHOptJ5WJE-PnVAPiayr_ZgjYe3wbpFMP0-Ty1p0XMwTOAf3rz6TSMFKFRezfDE8NXXLUp8PGr6DEkUJCXBfsctnwjEqd53hUICGOI5Ti2jbV3y14aSCbX_OosX3bIjYh-xAOc7HFizTLYOHO6gS4hugkivxuKwrQLDisK7qlNriKOfmobZ6xekaTn3EhT6pVuYNXsxEGqXjS3nX8PJUEov4nsclNeJu6aKOI-3JT_KbO58ypmu6bFBT_cEZaNCGgO");'>
+                                    </div>
+                                    <div>
+                                        <p class="text-base font-semibold">Sophia Carter</p>
+                                        <p class="text-[var(--text-secondary)] text-xs">2023-09-15</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-0.5 text-[var(--primary-color)]">
+                                    <svg fill="currentColor" height="20px" viewBox="0 0 256 256" width="20px"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z">
+                                        </path>
+                                    </svg>
+                                    <svg fill="currentColor" height="20px" viewBox="0 0 256 256" width="20px"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z">
+                                        </path>
+                                    </svg>
+                                    <svg fill="currentColor" height="20px" viewBox="0 0 256 256" width="20px"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z">
+                                        </path>
+                                    </svg>
+                                    <svg fill="currentColor" height="20px" viewBox="0 0 256 256" width="20px"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z">
+                                        </path>
+                                    </svg>
+                                    <svg fill="currentColor" height="20px" viewBox="0 0 256 256" width="20px"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z">
+                                        </path>
+                                    </svg>
+                                </div>
+                                <p class="text-sm leading-relaxed">"Clara Speaker a révolutionné la façon dont je gère mes
+                                    e-mails. Je peux maintenant rattraper les messages importants pendant mes trajets, ce qui rend ma journée tellement
+                                    plus productive !"</p>
+                            </div>
+                            <div
+                                class="flex flex-col gap-4 rounded-xl border border-[var(--border-color)] bg-[var(--background-light)] p-6 shadow-lg">
+                                <div class="flex items-center gap-3">
+                                    <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-12 shadow-md"
+                                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCo8KB-z3lzU6UJhXECkJnmhPej4RRtyMht3gDVfRf76L9quKV2FJu8UArCBCTtxpbA_hq81Gn9z2VV6kFQCtJvdvz8LWqgoWT-En64Wy_Jry1ZN_P25RacYD5S_13BGIFpP7IWerRg578mBqQ-DCihUhZapNIOnTavECAg1Imvkx50FNGTuk5qB9Ddf_U-OLhNTtsNr3hrO7iM-8fBvLfmI20TdqrtrZMvTT_kMKlIX9Iae5eLNv7IJSpQ-2uX_Mqwqqlr-V1gK0C5");'>
+                                    </div>
+                                    <div>
+                                        <p class="text-base font-semibold">Ethan Bennett</p>
+                                        <p class="text-[var(--text-secondary)] text-xs">2023-08-22</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-0.5 text-[var(--primary-color)]">
+                                    <svg fill="currentColor" height="20px" viewBox="0 0 256 256" width="20px"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z">
+                                        </path>
+                                    </svg>
+                                    <svg fill="currentColor" height="20px" viewBox="0 0 256 256" width="20px"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z">
+                                        </path>
+                                    </svg>
+                                    <svg fill="currentColor" height="20px" viewBox="0 0 256 256" width="20px"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z">
+                                        </path>
+                                    </svg>
+                                    <svg fill="currentColor" height="20px" viewBox="0 0 256 256" width="20px"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z">
+                                        </path>
+                                    </svg>
+                                    <svg class="text-slate-300" fill="currentColor" height="20px" viewBox="0 0 256 256"
+                                        width="20px" xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M239.2,97.29a16,16,0,0,0-13.81-11L166,81.17,142.72,25.81h0a15.95,15.95,0,0,0-29.44,0L90.07,81.17,30.61,86.32a16,16,0,0,0-9.11,28.06L66.61,153.8,53.09,212.34a16,16,0,0,0,23.84,17.34l51-31,51.11,31a16,16,0,0,0,23.84-17.34l-13.51-58.6,45.1-39.36A16,16,0,0,0,239.2,97.29Zm-15.22,5-45.1,39.36a16,16,0,0,0-5.08,15.71L187.35,216v0l-51.07-31a15.9,15.9,0,0,0-16.54,0l-51,31h0L82.2,157.4a16,16,0,0,0-5.08-15.71L32,102.35a.37.37,0,0,1,0-.09l59.44-5.14a16,16,0,0,0,13.35-9.75L128,32.08l23.2,55.29a16,16,0,0,0,13.35,9.75L224,102.26S224,102.32,224,102.33Z">
+                                        </path>
+                                    </svg>
+                                </div>
+                                <p class="text-sm leading-relaxed">"Cette application est une révolution pour quiconque se sent
+                                    submergé par sa boîte de réception. Les résumés sont clairs et concis, et j'adore pouvoir
+                                    écouter au lieu de lire."</p>
+                            </div>
+                            <div
+                                class="flex flex-col gap-4 rounded-xl border border-[var(--border-color)] bg-[var(--background-light)] p-6 shadow-lg">
+                                <div class="flex items-center gap-3">
+                                    <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-12 shadow-md"
+                                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuByLo_7XbrB10hs2ZswyrEteDVZuuWeroobNgWLBXgeFQ_FU3bPXvdXKd0Ywpjr8jt_yB5wHQiWW8AwGsFM8u-2xug-saBsdS1wHVj7HLKHln_SlAkUVx6BoCEw1Y6V_1F8DWTrhKVLL-f3-yoFhNdHAeD-SQLHOfioA1m9V4y_b_UBsSbGfJFoeWLqZ_DU9oLToPPOc6QrsUU308fUDcT1cPPQtFGe4QC4d3XeIeniRnvXzwjMyK7RUiFoSCxdInTAUjsr8ewZoAXi");'>
+                                    </div>
+                                    <div>
+                                        <p class="text-base font-semibold">Olivia Hayes</p>
+                                        <p class="text-[var(--text-secondary)] text-xs">2023-07-10</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-0.5 text-[var(--primary-color)]">
+                                    <svg fill="currentColor" height="20px" viewBox="0 0 256 256" width="20px"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z">
+                                        </path>
+                                    </svg>
+                                    <svg fill="currentColor" height="20px" viewBox="0 0 256 256" width="20px"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z">
+                                        </path>
+                                    </svg>
+                                    <svg fill="currentColor" height="20px" viewBox="0 0 256 256" width="20px"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z">
+                                        </path>
+                                    </svg>
+                                    <svg fill="currentColor" height="20px" viewBox="0 0 256 256" width="20px"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z">
+                                        </path>
+                                    </svg>
+                                    <svg fill="currentColor" height="20px" viewBox="0 0 256 256" width="20px"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z">
+                                        </path>
+                                    </svg>
+                                </div>
+                                <p class="text-sm leading-relaxed">"J'étais sceptique au début, mais Clara Speaker a dépassé
+                                    mes attentes. C'est incroyablement facile à utiliser et a considérablement réduit mon temps
+                                    d'écran. Je le recommande vivement !"</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="py-16 sm:py-24 bg-[var(--primary-color)] text-white">
+                    <div class="container mx-auto px-6 lg:px-10 text-center">
+                        <h2 class="text-3xl font-bold leading-tight tracking-tight sm:text-4xl">Transformez votre boîte de réception
+                            aujourd'hui</h2>
+                        <p class="text-slate-200 text-lg mt-4 max-w-xl mx-auto">Découvrez la puissance des résumés d'e-mails audio
+                            avec Clara Speaker. Téléchargez l'application maintenant et commencez à écouter vos e-mails !</p>
+                        <button
+                            class="mt-10 flex min-w-[120px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-white text-[var(--primary-color)] text-base font-semibold leading-normal tracking-wide shadow-lg hover:bg-slate-100 transition-colors transform hover:scale-105 mx-auto">
+                            <span class="truncate">Bientôt disponible</span>
+                        </button>
+                    </div>
+                </section>
+            </main>
+            <footer class="bg-slate-100 border-t border-[var(--border-color)] py-12">
+                <div class="container mx-auto px-6 lg:px-10">
+                    <div class="flex flex-col items-center gap-8 md:flex-row md:justify-between">
+                        <div class="flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
+                            <a class="text-[var(--text-secondary)] hover:text-[var(--primary-color)] text-sm font-medium transition-colors"
+                                href="#">Politique de confidentialité</a>
+                            <a class="text-[var(--text-secondary)] hover:text-[var(--primary-color)] text-sm font-medium transition-colors"
+                                href="#">Conditions d'utilisation</a>
+                            <a class="text-[var(--text-secondary)] hover:text-[var(--primary-color)] text-sm font-medium transition-colors"
+                                href="#">Contactez-nous</a>
+                        </div>
+                    </div>
+                    <p class="text-[var(--text-secondary)] text-sm font-normal text-center mt-8">© 2025 Clara Speaker.
+                        Tous droits réservés.</p>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+</body>
+
+</html>
