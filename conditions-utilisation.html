@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conditions d'utilisation - Clara Speaker</title>
+    <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect" />
+    <link as="style"
+        href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter%3Awght%40400%3B500%3B600%3B700%3B900&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900"
+        onload="this.rel='stylesheet'" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <style type="text/tailwindcss">
+        :root {
+        --primary-color: #0c7ff2;
+        --text-primary: #0d141c;
+        --text-secondary: #49739c;
+        --background-light: #f8fafc;--border-color: #e2e8f0;}
+    </style>
+</head>
+<body class="bg-slate-50 text-[var(--text-primary)]" style='font-family: Inter, "Noto Sans", sans-serif;'>
+    <div class="relative flex size-full min-h-screen flex-col group/design-root overflow-x-hidden">
+        <div class="layout-container flex h-full grow flex-col">
+            <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md shadow-sm">
+                <div class="container mx-auto flex items-center justify-between whitespace-nowrap px-6 py-4 lg:px-10">
+                    <div class="flex items-center gap-3 text-[var(--text-primary)]">
+                        <div class="size-6 text-[var(--primary-color)]">
+                            <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M36.7273 44C33.9891 44 31.6043 39.8386 30.3636 33.69C29.123 39.8386 26.7382 44 24 44C21.2618 44 18.877 39.8386 17.6364 33.69C16.3957 39.8386 14.0109 44 11.2727 44C7.25611 44 4 35.0457 4 24C4 12.9543 7.25611 4 11.2727 4C14.0109 4 16.3957 8.16144 17.6364 14.31C18.877 8.16144 21.2618 4 24 4C26.7382 4 29.123 8.16144 30.3636 14.31C31.6043 8.16144 33.9891 4 36.7273 4C40.7439 4 44 12.9543 44 24C44 35.0457 40.7439 44 36.7273 44Z"
+                                    fill="currentColor"></path>
+                            </svg>
+                        </div>
+                        <h2 class="text-[var(--text-primary)] text-xl font-bold tracking-tight">Clara Speaker</h2>
+                    </div>
+                    <nav class="hidden md:flex items-center gap-8">
+                        <a class="text-[var(--text-secondary)] hover:text-[var(--primary-color)] text-sm font-medium transition-colors"
+                            href="index.html#how-it-works">Comment ça marche</a>
+                        <a class="text-[var(--text-secondary)] hover:text-[var(--primary-color)] text-sm font-medium transition-colors"
+                            href="index.html#features">Fonctionnalités</a>
+                        <a class="text-[var(--text-secondary)] hover:text-[var(--primary-color)] text-sm font-medium transition-colors"
+                            href="index.html#testimonials">Témoignages</a>
+                    </nav>
+                    <button
+                        class="flex min-w-[100px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-5 bg-[var(--primary-color)] text-slate-50 text-sm font-semibold leading-normal tracking-wide shadow-md hover:bg-blue-600 transition-colors">
+                        <span class="truncate">Bientôt disponible</span>
+                    </button>
+                </div>
+            </header>
+            <main class="flex-1 py-16 sm:py-24">
+                <div class="container mx-auto px-6 lg:px-10">
+                    <h1 class="text-3xl font-extrabold leading-tight tracking-tight text-center mb-12 sm:text-4xl text-[var(--text-primary)]">Conditions d'utilisation</h1>
+                    <div class="prose lg:prose-lg xl:prose-xl mx-auto max-w-3xl p-6 bg-white rounded-lg shadow-lg">
+                        <p class="text-lg text-[var(--text-secondary)] mb-6">Bienvenue sur Clara Speaker ! En utilisant notre application, vous acceptez les présentes Conditions d'utilisation. Veuillez les lire attentivement.</p>
+
+                        <h2 class="text-2xl font-bold text-[var(--text-primary)] mb-4">1. Description du Service</h2>
+                        <p class="text-base text-[var(--text-secondary)] mb-6">Clara Speaker est une application mobile qui transforme vos e-mails en résumés audio concis, vous permettant de les écouter comme un podcast. Notre objectif est d'augmenter votre productivité, de réduire votre temps d'écran et de prioriser les informations importantes grâce à l'intelligence artificielle.</p>
+
+                        <h2 class="text-2xl font-bold text-[var(--text-primary)] mb-4">2. Connexion et Autorisations</h2>
+                        <p class="text-base text-[var(--text-secondary)] mb-4">Pour fonctionner, Clara Speaker nécessite que vous connectiez votre compte de messagerie (Gmail) via le protocole OAuth 2.0. Vous devrez accorder les permissions nécessaires pour que l'application puisse :</p>
+                        <ul class="list-disc list-inside space-y-2 mb-6">
+                            <li>Accéder à votre boîte de réception pour détecter les nouveaux e-mails.</li>
+                            <li>Détecter la connexion de vos écouteurs Bluetooth (Android 12+).</li>
+                            <li>Afficher des notifications (Android 13+).</li>
+                        </ul>
+                        <p class="text-base text-[var(--text-secondary)] mb-6">Nous ne stockons pas vos identifiants de messagerie. Les jetons d'authentification sont gérés de manière sécurisée via des variables d'environnement.</p>
+
+                        <h2 class="text-2xl font-bold text-[var(--text-primary)] mb-4">3. Traitement des E-mails et Confidentialité</h2>
+                        <ul class="list-disc list-inside space-y-2 mb-6">
+                            <li>Le contenu de vos e-mails est traité par notre IA (via l'API Gemini) uniquement dans le but de générer des résumés audio.</li>
+                            <li>Le traitement des e-mails est éphémère : le contenu de vos e-mails n'est pas stocké par notre backend après la génération du résumé.</li>
+                            <li>Les résumés audio générés sont stockés localement sur votre appareil.</li>
+                            <li>Nous utilisons le <code>lastHistoryId</code> de l'API Gmail pour ne traiter que les événements survenus depuis votre dernière utilisation, garantissant ainsi une synchronisation sans faille sans traiter l'historique complet de votre boîte mail.</li>
+                        </ul>
+
+                        <h2 class="text-2xl font-bold text-[var(--text-primary)] mb-4">4. Fiabilité et Performance</h2>
+                        <p class="text-base text-[var(--text-secondary)] mb-6">Nous nous engageons à ce que Clara Speaker soit fiable et performante. Cependant, nous ne pouvons garantir une disponibilité ininterrompue du service ou l'absence totale d'erreurs. Le système de file d'attente locale (Room) garantit qu'aucun résumé n'est perdu si votre appareil n'est pas disponible pour l'écouter.</p>
+
+                        <h2 class="text-2xl font-bold text-[var(--text-primary)] mb-4">5. Utilisation Acceptable</h2>
+                        <p class="text-base text-[var(--text-secondary)] mb-6">Vous vous engagez à utiliser Clara Speaker de manière responsable et conformément à toutes les lois applicables. Vous ne devez pas utiliser l'application à des fins illégales ou non autorisées.</p>
+
+                        <h2 class="text-2xl font-bold text-[var(--text-primary)] mb-4">6. Services Tiers</h2>
+                        <p class="text-base text-[var(--text-secondary)] mb-4">Clara Speaker utilise des services tiers pour son fonctionnement, notamment :</p>
+                        <ul class="list-disc list-inside space-y-2 mb-6">
+                            <li>Firebase (Firestore, Cloud Messaging)</li>
+                            <li>Google Cloud Platform (Gmail API, Text-to-Speech API)</li>
+                            <li>Google AI (Gemini API)</li>
+                        </ul>
+                        <p class="text-base text-[var(--text-secondary)] mb-6">L'utilisation de ces services est soumise à leurs propres conditions d'utilisation et politiques de confidentialité.</p>
+
+                        <h2 class="text-2xl font-bold text-[var(--text-primary)] mb-4">7. Modifications des Conditions</h2>
+                        <p class="text-base text-[var(--text-secondary)] mb-6">Nous nous réservons le droit de modifier les présentes Conditions d'utilisation à tout moment. Nous vous informerons de toute modification en publiant les nouvelles conditions sur cette page. Il est de votre responsabilité de consulter régulièrement ces conditions.</p>
+
+                        <h2 class="text-2xl font-bold text-[var(--text-primary)] mb-4">8. Droit Applicable</h2>
+                        <p class="text-base text-[var(--text-secondary)] mb-6">Les présentes Conditions d'utilisation sont régies et interprétées conformément aux lois de [Votre Pays/Juridiction].</p>
+
+                        <h2 class="text-2xl font-bold text-[var(--text-primary)] mb-4">9. Contact</h2>
+                        <p class="text-base text-[var(--text-secondary)] mb-4">Pour toute question concernant ces Conditions d'utilisation, veuillez nous contacter à :</p>
+                        <ul class="list-disc list-inside space-y-2 mb-6">
+                            <li>Par e-mail : ongouadimitri5 @ gmail.com</li>
+                        </ul>
+                    </div>
+                </div>
+            </main>
+            <footer class="bg-slate-100 border-t border-[var(--border-color)] py-12">
+                <div class="container mx-auto px-6 lg:px-10">
+                    <div class="flex flex-col items-center gap-8 md:flex-row md:justify-between">
+                        <div class="flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
+                            <a class="text-[var(--text-secondary)] hover:text-[var(--primary-color)] text-sm font-medium transition-colors"
+                                href="politique-confidentialite.html">Politique de confidentialité</a>
+                            <a class="text-[var(--text-secondary)] hover:text-[var(--primary-color)] text-sm font-medium transition-colors"
+                                href="conditions-utilisation.html">Conditions d'utilisation</a>
+                            <a class="text-[var(--text-secondary)] hover:text-[var(--primary-color)] text-sm font-medium transition-colors"
+                                href="#">Contactez-nous</a>
+                        </div>
+                        <div class="flex justify-center gap-6">
+                            <a class="text-[var(--text-secondary)] hover:text-[var(--primary-color)] transition-colors"
+                                href="#">
+                                <svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M247.39,68.94A8,8,0,0,0,240,64H209.57A48.66,48.66,0,0,0,168.1,40a46.91,46.91,0,0,0-33.75,13.7A47.9,47.9,0,0,0,120,88v6.09C79.74,83.47,46.81,50.72,46.46,50.37a8,8,0,0,0-13.65,4.92c-4.31,47.79,9.57,79.77,22,98.18a110.93,110.93,0,0,0,21.88,24.2c-15.23,17.53-39.21,26.74-39.47,26.84a8,8,0,0,0-3.85,11.93c.75,1.12,3.75,5.05,11.08,8.72C53.51,229.7,65.48,232,80,232c70.67,0,129.72-54.42,135.75-124.44l29.91-29.9A8,8,0,0,0,247.39,68.94Zm-45,29.41a8,8,0,0,0-2.32,5.14C196,166.58,143.28,216,80,216c-10.56,0-18-1.4-23.22-3.08,11.51-6.25,27.56-17,37.88-32.48A8,8,0,0,0,92,169.08c-.47-.27-43.91-26.34-44-96,16,13,45.25,33.17,78.67,38.79A8,8,0,0,0,136,104V88a32,32,0,0,1,9.6-22.92A30.94,30.94,0,0,1,167.9,56c12.66.16,24.49,7.88,29.44,19.21A8,8,0,0,0,204.67,80h16Z">
+                                    </path>
+                                </svg>
+                            </a>
+                            <a class="text-[var(--text-secondary)] hover:text-[var(--primary-color)] transition-colors"
+                                href="#">
+                                <svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm8,191.63V152h24a8,8,0,0,0,0-16H136V112a16,16,0,0,1,16-16h16a8,8,0,0,0,0-16H152a32,32,0,0,0-32,32v24H96a8,8,0,0,0,0,16h24v63.63a88,88,0,1,1,16,0Z">
+                                    </path>
+                                </svg>
+                            </a>
+                            <a class="text-[var(--text-secondary)] hover:text-[var(--primary-color)] transition-colors"
+                                href="#">
+                                <svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M128,80a48,48,0,1,0,48,48A48.05,48.05,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,128,160ZM176,24H80A56.06,56.06,0,0,0,24,80v96a56.06,56.06,0,0,0,56,56h96a56.06,56.06,0,0,0,56-56V80A56.06,56.06,0,0,0,176,24Zm40,152a40,40,0,0,1-40,40H80a40,40,0,0,1-40-40V80A40,40,0,0,1,80,40h96a40,40,0,0,1,40,40ZM192,76a12,12,0,1,1-12-12A12,12,0,0,1,192,76Z">
+                                    </path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                    <p class="text-[var(--text-secondary)] text-sm font-normal text-center mt-8">© 2024 Clara Speaker.
+                        Tous droits réservés.</p>
+                </div>
+            </footer>
+        </div>
+    </div>
+</body>
+</html>
