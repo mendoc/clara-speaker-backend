@@ -137,3 +137,5 @@ dist
 
 # Local Netlify folder
 .netlify
+/netlify/functions/*.zip
+/netlify/functions/*.json

@@ -2,24 +2,16 @@ import { Context } from '@netlify/functions'
 import admin from "firebase-admin";
 import { google } from "googleapis";
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { TelegramService } from "../../../services/TelegramService";
+import { OAuth2Service } from "../../../services/OAuth2Service";
+import { DatabaseService } from "../../../services/DatabaseService";
 
-// --- Initialisation des services ---
-if (admin.apps.length === 0) {
-  const serviceAccount = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT);
-  admin.initializeApp({ credential: admin.credential.cert(serviceAccount) });
-}
-const db = admin.firestore();
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-// --- Configuration du client OAuth2 ---
-const oauth2Client = new google.auth.OAuth2(
-  process.env.GMAIL_CLIENT_ID,
-  process.env.GMAIL_CLIENT_SECRET,
-  "https://developers.google.com/oauthplayground" // L'URI de redirection
-);
-oauth2Client.setCredentials({ refresh_token: process.env.GMAIL_REFRESH_TOKEN });
+const telegramService = new TelegramService();
+const oAuth2Service = new OAuth2Service();
 
-const gmail = google.gmail({ version: 'v1', auth: oauth2Client });
+const userId = 'ongouadimitri5';
 
 export default async (request: Request, context: Context) => {
   // On s'assure que la méthode est bien POST
@@ -30,15 +22,19 @@ export default async (request: Request, context: Context) => {
     );
   }
 
+  const dbService = new DatabaseService();
+
+  const refreshToken = await dbService.getUserRefreshToken(userId);
+  oAuth2Service.setRefreshToken(refreshToken);
+  const gmail = google.gmail({ version: 'v1', auth: oAuth2Service.getOAuth2Client() });
+
   console.log("Démarrage de la vérification des nouveaux emails (mode batch)...");
 
   try {
     // Récupérer l'état depuis Firestore
-    const userRef = db.collection('clara_speaker_users').doc('ongouadimitri5');
-    const userDoc = await userRef.get();
-    if (!userDoc.exists) throw new Error("Document utilisateur non trouvé.");
+    const userState = await dbService.getUserState(userId);
 
-    const { lastHistoryId, fcmToken } = userDoc.data();
+    const { lastHistoryId, fcmToken } = userState;
     if (!fcmToken) throw new Error("Token FCM manquant dans Firestore.");
 
     // Si lastHistoryId est à sa valeur initiale ("1") ou n'existe pas, on initialise le système.
@@ -50,7 +46,9 @@ export default async (request: Request, context: Context) => {
       const currentHistoryId = profileResponse.data.historyId;
 
       // On met à jour Firestore avec cet ID de départ.
-      await userRef.update({ lastHistoryId: currentHistoryId });
+      dbService.setUserState(userId, {
+        lastHistoryId: currentHistoryId,
+      });
 
       console.log(`Initialisation terminée. Le point de départ est fixé à l'History ID : ${currentHistoryId}.`);
       console.log("Le prochain cycle traitera les emails arrivant à partir de maintenant.");
@@ -73,7 +71,9 @@ export default async (request: Request, context: Context) => {
     if (!historyResponse.data.history) {
       console.log("Aucun nouvel email depuis le dernier historique.");
       // On met quand même à jour l'ID d'historique pour la prochaine fois
-      await userRef.update({ lastHistoryId: newHistoryId });
+      dbService.setUserState(userId, {
+        lastHistoryId: newHistoryId,
+      });
       return Response.json(
         { message: "Aucun nouvel email depuis le dernier historique." },
         { status: 200 }
@@ -87,7 +87,9 @@ export default async (request: Request, context: Context) => {
 
     if (newMessagesIds.length === 0) {
       console.log("Aucun nouvel email trouvé dans l'historique.");
-      await userRef.update({ lastHistoryId: newHistoryId });
+      dbService.setUserState(userId, {
+        lastHistoryId: newHistoryId,
+      });
       return Response.json(
         { message: "Aucun nouvel email trouvé dans l'historique." },
         { status: 200 }
@@ -148,7 +150,9 @@ export default async (request: Request, context: Context) => {
     }
 
     // On met à jour l'état une seule fois à la fin
-    await userRef.update({ lastHistoryId: newHistoryId });
+    dbService.setUserState(userId, {
+      lastHistoryId: newHistoryId,
+    });
     console.log(`Dernier ID d'historique mis à jour à ${newHistoryId}.`);
 
     return Response.json(
@@ -159,6 +163,11 @@ export default async (request: Request, context: Context) => {
   } catch (error) {
     // Gère les erreurs de parsing JSON ou autres erreurs inattendues
     console.error("Erreur lors du traitement par lot des emails:", error);
+    if (error.message.includes('invalid_grant')) {
+      await telegramService.sendMessage(
+        `Token expiré. \nURL d'authentification : \n${oAuth2Service.getAuthUrl()}`
+      );
+    }
     return Response.json(
       { error: error.message },
       { status: 500 }
