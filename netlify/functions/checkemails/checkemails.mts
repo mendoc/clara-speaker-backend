@@ -101,15 +101,17 @@ export default async (request: Request, context: Context) => {
     // =================================================================
     const unreadEmailsBatch = [];
     for (const messageId of newMessagesIds) {
-      const msg = await gmail.users.messages.get({ userId: 'me', id: messageId, format: 'metadata', metadataHeaders: ['From', 'Subject'] });
+      const msg = await gmail.users.messages.get({ userId: 'me', id: messageId, format: 'full' });
 
       // On vérifie si le label 'UNREAD' est présent
       if (msg.data.labelIds && msg.data.labelIds.includes('UNREAD')) {
         // L'email est bien nouveau ET non lu, on l'ajoute au lot
         const headers = msg.data.payload.headers;
+        const body = getEmailBody(msg.data.payload);
         unreadEmailsBatch.push({
           from: headers.find(h => h.name === 'From').value,
           subject: headers.find(h => h.name === 'Subject').value,
+          body: body,
         });
         console.log(`-> Email ${messageId} est non lu. Ajouté au rapport.`);
       } else {
@@ -124,14 +126,14 @@ export default async (request: Request, context: Context) => {
     if (unreadEmailsBatch.length > 0) {
       // On prépare une note de synthèse pour l'IA
       const emailListForPrompt = unreadEmailsBatch
-        .map((email, index) => `${index + 1}. De: ${email.from}, Sujet: ${email.subject}`)
-        .join("\n");
+        .map((email, index) => `${index + 1}. De: ${email.from}, Sujet: ${email.subject}\nContenu: ${email.body}`)
+        .join("\n\n");
 
       const prompt = `
         Tu es un assistant personnel vocal. Tu dois créer un rapport de synthèse très court sur les nouveaux emails reçus.
-        Commence par dire le nombre total d'emails. Ensuite, mentionne brièvement les plus importants si possible, sans faire de phrases trop longues.
+        Commence par dire le nombre total d'emails. Ensuite, pour chaque email, résume son contenu en une seule phrase très courte.
         Sois concis et naturel, comme si tu parlais à quelqu'un.
-        Voici la liste des emails :
+        Voici la liste des emails (expéditeur, sujet et contenu) :
         ${emailListForPrompt}
       `;
 

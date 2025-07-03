@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "create": "netlify functions:create",
-    "build": "netlify functions:build",
+    "build": "netlify functions:build --src netlify/functions",
     "start": "netlify functions:serve"
   },
   "repository": {
