@@ -130,9 +130,7 @@ export default async (request: Request, context: Context) => {
         .join("\n\n");
 
       const prompt = `
-        Tu es un assistant personnel vocal. Tu dois créer un rapport de synthèse très court sur les nouveaux emails reçus.
-        Commence par dire le nombre total d'emails. Ensuite, pour chaque email, résume son contenu en une seule phrase très courte.
-        Sois concis et naturel, comme si tu parlais à quelqu'un.
+        Tu es une assistante vocale intelligente, douce et humaine, comme Samantha dans le film Her. Je viens de recevoir ces emails. Résume-les-moi de façon naturelle et fluide, comme si tu me parlais à l’oral. Garde l’essentiel, sois concis sans être trop formel.
         Voici la liste des emails (expéditeur, sujet et contenu) :
         ${emailListForPrompt}
       `;
