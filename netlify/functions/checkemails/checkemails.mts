@@ -21,10 +21,10 @@ export default async (request: Request, context: Context) => {
 
   const dbService = new DatabaseService();
   const users = await dbService.getAllUsers();
+  const oAuth2Service = new OAuth2Service();
 
   for (const user of users) {
     const userId = user.id;
-    const oAuth2Service = new OAuth2Service();
     oAuth2Service.setRefreshToken(user.refreshToken);
     const gmailService = new GmailService(oAuth2Service.getOAuth2Client());
 
