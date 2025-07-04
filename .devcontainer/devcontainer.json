@@ -26,7 +26,8 @@
         "chat.commandCenter.enabled": false,
         "workbench.navigationControl.enabled": false,
         "window.newWindowProfile": "Par défaut",
-        "terminal.integrated.defaultLocation": "editor"
+        "terminal.integrated.defaultLocation": "editor",
+            "terminal.integrated.hideOnStartup": "always"
       }
     }
   }
