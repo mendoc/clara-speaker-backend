@@ -44,4 +44,14 @@ export class DatabaseService {
     const userRef = this.db.collection('clara_speaker_users').doc(userId);
     await userRef.set(state, { merge: true });
   }
+
+  async getAllUsers() {
+    const usersRef = this.db.collection('clara_speaker_users');
+    const snapshot = await usersRef.get();
+    const users = [];
+    snapshot.forEach(doc => {
+      users.push({ id: doc.id, ...doc.data() });
+    });
+    return users;
+  }
 }

@@ -24,11 +24,23 @@ export class OAuth2Service {
     return await this.oauth2Client.getToken(code);
   }
 
+  async getUserInfo() {
+    const oauth2 = google.oauth2({
+      auth: this.oauth2Client,
+      version: 'v2'
+    });
+    const { data } = await oauth2.userinfo.get();
+    return data;
+  }
+
   getAuthUrl() {
     // Générer l'URL d'autorisation
     return this.oauth2Client.generateAuthUrl({
       access_type: "offline",
-      scope: ["https://www.googleapis.com/auth/gmail.readonly"],
+      scope: [
+        "https://www.googleapis.com/auth/gmail.readonly",
+        "https://www.googleapis.com/auth/userinfo.profile"
+      ],
       prompt: "consent", // Force à redemander le consentement pour obtenir un refresh token
     });
   }

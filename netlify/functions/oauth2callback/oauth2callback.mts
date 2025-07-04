@@ -13,11 +13,14 @@ export default async (request: Request, context: Context) => {
 
     const oauth2Service = new OAuth2Service();
     const { tokens } = await oauth2Service.getToken(code);
-    console.log("[/oauth2callback] Refresh Token:", tokens.refresh_token);
+    oauth2Service.getOAuth2Client().setCredentials(tokens);
 
-    await databaseService.setUserRefreshToken('ongouadimitri5', tokens.refresh_token);
+    const userInfo = await oauth2Service.getUserInfo();
+    const userId = userInfo.id;
 
-    await telegramService.sendMessage(`Token mis à jour avec succès`);
+    await databaseService.setUserRefreshToken(userId, tokens.refresh_token);
+
+    await telegramService.sendMessage(`Token mis à jour avec succès pour l'utilisateur ${userId}`);
 
     return new Response(
       "Token mis à jour avec succès ! Vous pouvez fermer cette fenêtre."
