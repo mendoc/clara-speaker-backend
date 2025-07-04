@@ -3,10 +3,13 @@
   "version": "1.0.0",
   "description": "Fonctions cloud pour Clara Speaker",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "create": "netlify functions:create",
-    "build": "netlify functions:build --src netlify/functions",
-    "start": "netlify functions:serve"
+    "build": "npm run lint && tsc && netlify functions:build --src netlify/functions",
+    "start": "netlify functions:serve",
+    "test": "bash test.sh",
+    "lint": "eslint 'services/**/*.ts' 'common/**/*.ts' 'netlify/functions/**/*.mts'"
   },
   "repository": {
     "type": "git",
@@ -29,5 +32,14 @@
     "googleapis": "^150.0.1",
     "node-telegram-bot-api": "^0.66.0",
     "typescript": "^4.9.5"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.30.1",
+    "@types/node-telegram-bot-api": "^0.64.9",
+    "@typescript-eslint/eslint-plugin": "^8.35.1",
+    "@typescript-eslint/parser": "^8.35.1",
+    "eslint": "^9.30.1",
+    "globals": "^16.3.0",
+    "typescript-eslint": "^8.35.1"
   }
 }

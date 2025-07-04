@@ -1,7 +1,9 @@
-import { google } from "googleapis";
+import { google, Auth, oauth2_v2 } from "googleapis";
 import { gmailConfig } from "../common/config";
 
 export class OAuth2Service {
+  private oauth2Client: Auth.OAuth2Client;
+
   constructor() {
     this.oauth2Client = new google.auth.OAuth2(
       gmailConfig.clientId,
@@ -10,21 +12,21 @@ export class OAuth2Service {
     );
   }
 
-  getOAuth2Client() {
+  getOAuth2Client(): Auth.OAuth2Client {
     // Retourner l'instance OAuth2Client
     return this.oauth2Client;
   }
 
-  setRefreshToken(refreshToken) {
+  setRefreshToken(refreshToken: string): void {
     // Mettre à jour le token de rafraîchissement
     this.oauth2Client.setCredentials({ refresh_token: refreshToken });
   }
 
-  async getToken(code) {
+  async getToken(code: string): Promise<{ tokens: Auth.Credentials }> {
     return await this.oauth2Client.getToken(code);
   }
 
-  async getUserInfo() {
+  async getUserInfo(): Promise<oauth2_v2.Schema$Userinfo> {
     const oauth2 = google.oauth2({
       auth: this.oauth2Client,
       version: 'v2'
@@ -33,7 +35,7 @@ export class OAuth2Service {
     return data;
   }
 
-  getAuthUrl() {
+  getAuthUrl(): string {
     // Générer l'URL d'autorisation
     return this.oauth2Client.generateAuthUrl({
       access_type: "offline",

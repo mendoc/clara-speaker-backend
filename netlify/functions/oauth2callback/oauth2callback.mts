@@ -1,4 +1,3 @@
-import { Context } from '@netlify/functions'
 import { OAuth2Service } from "../../../services/OAuth2Service";
 import { DatabaseService } from "../../../services/DatabaseService";
 import { TelegramService } from "../../../services/TelegramService";
@@ -6,7 +5,7 @@ import { TelegramService } from "../../../services/TelegramService";
 const databaseService = new DatabaseService();
 const telegramService = new TelegramService();
 
-export default async (request: Request, context: Context) => {
+export default async (request: Request) => {
   try {
     const url = new URL(request.url)
     const code = url.searchParams.get('code') || ''

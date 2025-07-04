@@ -1,4 +1,3 @@
-import { Context } from "@netlify/functions";
 import admin from "firebase-admin";
 
 // --- 1. Initialisation SÉCURISÉE de Firebase Admin ---
@@ -22,7 +21,7 @@ if (admin.apps.length === 0) {
  * Handler principal de la fonction Netlify.
  * Il attend une requête POST avec un corps JSON.
  */
-export default async (request: Request, context: Context) => {
+export default async (request: Request) => {
   // On s'assure que la méthode est bien POST
   if (request.method !== 'POST') {
     return Response.json(

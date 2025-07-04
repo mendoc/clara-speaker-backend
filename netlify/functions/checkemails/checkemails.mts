@@ -1,16 +1,23 @@
-import { Context } from '@netlify/functions'
 import admin from "firebase-admin";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { TelegramService } from "../../../services/TelegramService";
 import { OAuth2Service } from "../../../services/OAuth2Service";
 import { DatabaseService } from "../../../services/DatabaseService";
 import { GmailService } from "../../../services/GmailService";
+import { geminiConfig } from "../../../common/config";
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+
+if (!geminiConfig.apiKey) {
+  throw new Error("GEMINI_API_KEY is not defined in config.");
+}
+const genAI = new GoogleGenerativeAI(geminiConfig.apiKey);
 
 const telegramService = new TelegramService();
 
-export default async (request: Request, context: Context) => {
+const dbService = new DatabaseService();
+const oAuth2Service = new OAuth2Service();
+
+export default async (request: Request) => {
   // On s'assure que la méthode est bien POST
   if (request.method !== 'POST') {
     return Response.json(
@@ -19,9 +26,7 @@ export default async (request: Request, context: Context) => {
     );
   }
 
-  const dbService = new DatabaseService();
   const users = await dbService.getAllUsers();
-  const oAuth2Service = new OAuth2Service();
 
   for (const user of users) {
     const userId = user.id;
