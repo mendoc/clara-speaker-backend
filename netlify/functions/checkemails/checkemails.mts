@@ -1,10 +1,10 @@
 import { Context } from '@netlify/functions'
 import admin from "firebase-admin";
-import { google } from "googleapis";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { TelegramService } from "../../../services/TelegramService";
 import { OAuth2Service } from "../../../services/OAuth2Service";
 import { DatabaseService } from "../../../services/DatabaseService";
+import { GmailService } from "../../../services/GmailService";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
@@ -26,7 +26,7 @@ export default async (request: Request, context: Context) => {
 
   const refreshToken = await dbService.getUserRefreshToken(userId);
   oAuth2Service.setRefreshToken(refreshToken);
-  const gmail = google.gmail({ version: 'v1', auth: oAuth2Service.getOAuth2Client() });
+  const gmailService = new GmailService(oAuth2Service.getOAuth2Client());
 
   console.log("Démarrage de la vérification des nouveaux emails (mode batch)...");
 
@@ -41,9 +41,7 @@ export default async (request: Request, context: Context) => {
     if (lastHistoryId == 1 || !lastHistoryId) {
       console.log("Première exécution détectée. Initialisation du History ID...");
 
-      // On récupère le profil pour obtenir l'ID d'historique actuel. 
-      const profileResponse = await gmail.users.getProfile({ userId: 'me' });
-      const currentHistoryId = profileResponse.data.historyId;
+      const currentHistoryId = await gmailService.getInitialHistoryId();
 
       // On met à jour Firestore avec cet ID de départ.
       dbService.setUserState(userId, {
@@ -60,32 +58,9 @@ export default async (request: Request, context: Context) => {
       );
     }
 
-    // Chercher les nouveaux emails depuis le dernier historique connu
-    const historyResponse = await gmail.users.history.list({
-      userId: 'me',
-      startHistoryId: lastHistoryId,
-      historyTypes: ['messageAdded'],
-    });
+    const { newEmails, newHistoryId } = await gmailService.getNewEmails(lastHistoryId);
 
-    const newHistoryId = historyResponse.data.historyId;
-    if (!historyResponse.data.history) {
-      console.log("Aucun nouvel email depuis le dernier historique.");
-      // On met quand même à jour l'ID d'historique pour la prochaine fois
-      dbService.setUserState(userId, {
-        lastHistoryId: newHistoryId,
-      });
-      return Response.json(
-        { message: "Aucun nouvel email depuis le dernier historique." },
-        { status: 200 }
-      );
-    }
-
-    // On récupère les ID des nouveaux messages
-    const newMessagesIds = historyResponse.data.history
-      .flatMap(h => h.messagesAdded || [])
-      .map(m => m.message.id);
-
-    if (newMessagesIds.length === 0) {
+    if (newEmails.length === 0) {
       console.log("Aucun nouvel email trouvé dans l'historique.");
       dbService.setUserState(userId, {
         lastHistoryId: newHistoryId,
@@ -96,38 +71,14 @@ export default async (request: Request, context: Context) => {
       );
     }
 
-    console.log(`Trouvé ${newMessagesIds.length} nouvel(s) email(s). Début de la collecte.`);
-
-    // =================================================================
-    // ÉTAPE DE COLLECTE
-    // =================================================================
-    const unreadEmailsBatch = [];
-    for (const messageId of newMessagesIds) {
-      const msg = await gmail.users.messages.get({ userId: 'me', id: messageId, format: 'full' });
-
-      // On vérifie si le label 'UNREAD' est présent
-      if (msg.data.labelIds && msg.data.labelIds.includes('UNREAD')) {
-        // L'email est bien nouveau ET non lu, on l'ajoute au lot
-        const headers = msg.data.payload.headers;
-        const body = getEmailBody(msg.data.payload);
-        unreadEmailsBatch.push({
-          from: headers.find(h => h.name === 'From').value,
-          subject: headers.find(h => h.name === 'Subject').value,
-          body: body,
-        });
-        console.log(`-> Email ${messageId} est non lu. Ajouté au rapport.`);
-      } else {
-        // L'email a déjà été lu, on l'ignore
-        console.log(`-> Email ${messageId} est déjà lu. Ignoré.`);
-      }
-    }
+    console.log(`Trouvé ${newEmails.length} nouvel(s) email(s). Début de la collecte.`);
 
     // =================================================================
     // ÉTAPE DE SYNTHÈSE GLOBALE
     // =================================================================
-    if (unreadEmailsBatch.length > 0) {
+    if (newEmails.length > 0) {
       // On prépare une note de synthèse pour l'IA
-      const emailListForPrompt = unreadEmailsBatch
+      const emailListForPrompt = newEmails
         .map((email, index) => `${index + 1}. De: ${email.from}, Sujet: ${email.subject}\nContenu: ${email.body}`)
         .join("\n\n");
 
@@ -185,20 +136,6 @@ async function sendFcmMessage(deviceToken, summary) {
     android: { priority: 'high' },
   });
   console.log("Message FCM envoyé avec succès.");
-}
-
-// Helper pour extraire le corps du texte d'un email (gère les formats complexes)
-function getEmailBody(payload) {
-  if (payload.body && payload.body.data) {
-    return Buffer.from(payload.body.data, 'base64').toString('utf-8');
-  }
-  if (payload.parts) {
-    const part = payload.parts.find(p => p.mimeType === 'text/plain');
-    if (part && part.body && part.body.data) {
-      return Buffer.from(part.body.data, 'base64').toString('utf-8');
-    }
-  }
-  return "Contenu non trouvé.";
 }
 
 export const config = {

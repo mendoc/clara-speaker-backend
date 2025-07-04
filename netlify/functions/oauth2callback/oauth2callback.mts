@@ -1,7 +1,7 @@
 import { Context } from '@netlify/functions'
-import { OAuth2Service } from "../../../services/OAuth2Service.js";
-import { DatabaseService } from "../../../services/DatabaseService.js";
-import { TelegramService } from "../../../services/TelegramService.js";
+import { OAuth2Service } from "../../../services/OAuth2Service";
+import { DatabaseService } from "../../../services/DatabaseService";
+import { TelegramService } from "../../../services/TelegramService";
 
 const databaseService = new DatabaseService();
 const telegramService = new TelegramService();
