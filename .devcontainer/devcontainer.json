@@ -3,5 +3,31 @@
   "postCreateCommand": "npm install -g @google/gemini-cli",
   "postAttachCommand": {
     "server": "gemini"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "nopjmp.fairyfloss",
+        "MS-CEINTL.vscode-language-pack-fr"
+      ],
+      "settings": {
+        "git.confirmSync": false,
+        "workbench.colorTheme": "fairyfloss",
+        "[typescript]": {
+          // désactive les diagnostics pour TypeScript
+          "editor.codeActionsOnSave": {
+            "source.fixAll": "never",
+            "source.organizeImports": "never"
+          },
+          "editor.formatOnSave": false,
+          "editor.defaultFormatter": "vscode.typescript-language-features"
+        },
+        "window.menuBarVisibility": "toggle",
+        "chat.commandCenter.enabled": false,
+        "workbench.navigationControl.enabled": false,
+        "window.newWindowProfile": "Par défaut",
+        "terminal.integrated.defaultLocation": "editor"
+      }
+    }
   }
 }
