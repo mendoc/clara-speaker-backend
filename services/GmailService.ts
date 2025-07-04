@@ -37,7 +37,7 @@ class GmailService {
     for (const messageId of newMessagesIds) {
       const msg = await this.gmail.users.messages.get({ userId: 'me', id: messageId, format: 'full' });
 
-      if (msg.data.labelIds && msg.data.labelIds.includes('UNREAD')) {
+      if (msg.data.labelIds && msg.data.labelIds.includes('UNREAD') && !msg.data.labelIds.includes('SPAM')) {
         const headers = msg.data.payload?.headers;
         const body = this.getEmailBody(msg.data.payload);
         unreadEmailsBatch.push({
