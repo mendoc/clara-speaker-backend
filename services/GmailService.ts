@@ -35,16 +35,24 @@ class GmailService {
 
     const unreadEmailsBatch: { from: string | null | undefined, subject: string | null | undefined, body: string }[] = [];
     for (const messageId of newMessagesIds) {
-      const msg = await this.gmail.users.messages.get({ userId: 'me', id: messageId, format: 'full' });
+      try {
+        const msg = await this.gmail.users.messages.get({ userId: 'me', id: messageId, format: 'full' });
 
-      if (msg.data.labelIds && msg.data.labelIds.includes('UNREAD') && !msg.data.labelIds.includes('SPAM')) {
-        const headers = msg.data.payload?.headers;
-        const body = this.getEmailBody(msg.data.payload);
-        unreadEmailsBatch.push({
-          from: headers?.find((h: gmail_v1.Schema$MessagePartHeader) => h.name === 'From')?.value || null,
-          subject: headers?.find((h: gmail_v1.Schema$MessagePartHeader) => h.name === 'Subject')?.value || null,
-          body: body,
-        });
+        if (msg.data.labelIds && msg.data.labelIds.includes('UNREAD') && !msg.data.labelIds.includes('SPAM')) {
+          const headers = msg.data.payload?.headers;
+          const body = this.getEmailBody(msg.data.payload);
+          unreadEmailsBatch.push({
+            from: headers?.find((h: gmail_v1.Schema$MessagePartHeader) => h.name === 'From')?.value || null,
+            subject: headers?.find((h: gmail_v1.Schema$MessagePartHeader) => h.name === 'Subject')?.value || null,
+            body: body,
+          });
+        }
+      } catch (error: any) {
+        if (error.code === 404) {
+          console.log(`Email ${messageId} non trouvé (probablement supprimé), ignoré`);
+          continue;
+        }
+        throw error;
       }
     }
 
