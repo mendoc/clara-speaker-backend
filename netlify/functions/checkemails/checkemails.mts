@@ -105,7 +105,7 @@ export default async (request: Request) => {
 
         // On fait UN SEUL appel à l'IA
         console.log("Envoi du batch à Gemini pour synthèse globale...");
-        const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+        const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
         const result = await model.generateContent(prompt);
         const globalSummary = result.response.text();
 
