@@ -47,8 +47,8 @@ class GmailService {
             body: body,
           });
         }
-      } catch (error: any) {
-        if (error.code === 404) {
+      } catch (error) {
+        if ((error as { code?: number })?.code === 404) {
           console.log(`Email ${messageId} non trouvé (probablement supprimé), ignoré`);
           continue;
         }
