@@ -49,7 +49,7 @@ export default async (request: Request) => {
         const currentHistoryId = await gmailService.getInitialHistoryId();
 
         // On met à jour Firestore avec cet ID de départ.
-        dbService.setUserState(userId, {
+        await dbService.setUserState(userId, {
           lastHistoryId: currentHistoryId,
         });
 
@@ -59,11 +59,27 @@ export default async (request: Request) => {
         continue; // Passe à l'utilisateur suivant
       }
 
-      const { newEmails, newHistoryId } = await gmailService.getNewEmails(lastHistoryId);
+      let newEmails: Awaited<ReturnType<typeof gmailService.getNewEmails>>["newEmails"];
+      let newHistoryId: string | null | undefined;
+
+      try {
+        ({ newEmails, newHistoryId } = await gmailService.getNewEmails(lastHistoryId));
+      } catch (error) {
+        // Gmail ne conserve l'historique que quelques jours : un lastHistoryId trop
+        // ancien renvoie 404. On repart de l'ID courant, les emails de l'intervalle
+        // sont définitivement perdus mais l'utilisateur n'est plus bloqué.
+        if ((error as { code?: number })?.code !== 404) throw error;
+
+        const currentHistoryId = await gmailService.getInitialHistoryId();
+        await dbService.setUserState(userId, { lastHistoryId: currentHistoryId });
+
+        console.warn(`History ID ${lastHistoryId} expiré pour l'utilisateur ${userId}. Réinitialisé à ${currentHistoryId}.`);
+        continue; // Passe à l'utilisateur suivant
+      }
 
       if (newEmails.length === 0) {
         console.log("Aucun nouvel email trouvé dans l'historique.");
-        dbService.setUserState(userId, {
+        await dbService.setUserState(userId, {
           lastHistoryId: newHistoryId,
         });
         continue; // Passe à l'utilisateur suivant
@@ -99,7 +115,7 @@ export default async (request: Request) => {
       }
 
       // On met à jour l'état une seule fois à la fin
-      dbService.setUserState(userId, {
+      await dbService.setUserState(userId, {
         lastHistoryId: newHistoryId,
       });
       console.log(`Dernier ID d'historique mis à jour à ${newHistoryId}.`);
@@ -107,7 +123,7 @@ export default async (request: Request) => {
     } catch (error) {
       // Gère les erreurs de parsing JSON ou autres erreurs inattendues
       console.error(`Erreur lors du traitement par lot des emails pour l'utilisateur ${userId}:`, error);
-      if (error.message.includes('invalid_grant')) {
+      if (error?.message?.includes('invalid_grant')) {
         await telegramService.sendMessage(
           `Token expiré pour l'utilisateur ${userId}. \nURL d'authentification : \n${new OAuth2Service().getAuthUrl()}`
         );
