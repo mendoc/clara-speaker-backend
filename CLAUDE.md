@@ -30,7 +30,7 @@ Les fonctions sont volontairement minces ; la logique vit dans `services/`, chaq
 
 - `OAuth2Service` — client OAuth2 Google. Scopes : `gmail.readonly` + `userinfo.profile`.
 - `GmailService` — construit avec un `OAuth2Client` déjà authentifié. Utilise l'API **History** de Gmail (pas une liste de messages) : `getNewEmails(lastHistoryId)` renvoie les emails ajoutés depuis cet ID et le nouvel ID.
-- `DatabaseService` — Firestore, collection unique `clara_speaker_users`, un document par utilisateur : `{ refreshToken, lastHistoryId, fcmToken }`.
+- `DatabaseService` — Firestore, collection unique `clara_speaker_users`, un document par utilisateur : `{ refreshToken, lastHistoryId, fcmToken }`. `refreshToken` peut être absent : l'app Android crée le document avec son `fcmToken` avant que l'utilisateur ait parcouru le flux OAuth. Ces documents doivent être ignorés, pas traités.
 - `TelegramService` — canal d'alerte admin (chat unique via `TELEGRAM_CHAT_ID`), pas une fonctionnalité utilisateur.
 
 ### Flux de `checkemails`

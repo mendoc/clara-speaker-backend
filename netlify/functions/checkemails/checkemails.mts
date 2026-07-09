@@ -31,6 +31,14 @@ export default async (request: Request) => {
 
   for (const user of users) {
     const userId = user.id;
+
+    // L'app Android crée le document (avec son fcmToken) avant que l'utilisateur ait
+    // parcouru le flux OAuth. Sans refreshToken, tout appel Gmail échoue : on attend.
+    if (!user.refreshToken) {
+      console.warn(`Utilisateur ${userId} sans refreshToken (autorisation Gmail non effectuée), ignoré.`);
+      continue;
+    }
+
     oAuth2Service.setRefreshToken(user.refreshToken);
     const gmailService = new GmailService(oAuth2Service.getOAuth2Client());
 
