@@ -38,7 +38,7 @@ Les fonctions sont volontairement minces ; la logique vit dans `services/`, chaq
 Pour **chaque** utilisateur de Firestore : on réhydrate un `OAuth2Client` avec son `refreshToken`, on lit son `lastHistoryId`.
 
 - `lastHistoryId` valant `1` ou absent = premier passage : on enregistre l'`historyId` courant de la boîte et on passe à l'utilisateur suivant sans notifier. Les emails antérieurs ne sont jamais traités.
-- Sinon on récupère les nouveaux emails non lus (hors SPAM), on les concatène dans **un seul** prompt Gemini (`gemini-2.5-flash`) pour produire une synthèse globale, et on envoie **une seule** notification FCM. Ne pas revenir à un appel LLM par email : le batching est intentionnel (coût et latence).
+- Sinon on récupère les nouveaux emails non lus (hors SPAM), on les concatène dans **un seul** prompt Gemini (`gemini-3.1-flash-lite`) pour produire une synthèse globale, et on envoie **une seule** notification FCM. Ne pas revenir à un appel LLM par email : le batching est intentionnel (coût et latence).
 - `lastHistoryId` est réécrit à chaque itération, y compris quand aucun email n'est trouvé, sinon l'historique Gmail expire.
 
 Le persona du prompt (« assistante vocale douce et humaine, comme Samantha dans Her ») définit le ton du produit ; le texte généré est lu à voix haute côté Android.
