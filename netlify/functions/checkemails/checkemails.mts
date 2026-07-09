@@ -16,7 +16,6 @@ const genAI = new GoogleGenerativeAI(geminiConfig.apiKey);
 const telegramService = new TelegramService();
 
 const dbService = new DatabaseService();
-const oAuth2Service = new OAuth2Service();
 
 export default async (request: Request) => {
   // On s'assure que la méthode est bien POST
@@ -39,6 +38,9 @@ export default async (request: Request) => {
       continue;
     }
 
+    // Une instance par utilisateur : un OAuth2Client partagé et muté dans la boucle
+    // ne reste correct que tant que les itérations sont strictement séquentielles.
+    const oAuth2Service = new OAuth2Service();
     oAuth2Service.setRefreshToken(user.refreshToken);
     const gmailService = new GmailService(oAuth2Service.getOAuth2Client());
 
@@ -134,7 +136,7 @@ export default async (request: Request) => {
       console.error(`Erreur lors du traitement par lot des emails pour l'utilisateur ${userId}:`, formatError(error));
       if (error?.message?.includes('invalid_grant')) {
         await telegramService.sendMessage(
-          `Token expiré pour l'utilisateur ${userId}. \nURL d'authentification : \n${new OAuth2Service().getAuthUrl()}`
+          `Token expiré pour l'utilisateur ${userId}. \nURL d'authentification : \n${oAuth2Service.getAuthUrl()}`
         );
       }
     }
