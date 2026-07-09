@@ -5,6 +5,7 @@ import { OAuth2Service } from "../../../services/OAuth2Service";
 import { DatabaseService } from "../../../services/DatabaseService";
 import { GmailService } from "../../../services/GmailService";
 import { geminiConfig } from "../../../common/config";
+import { formatError } from "../../../common/errors";
 
 
 if (!geminiConfig.apiKey) {
@@ -122,7 +123,7 @@ export default async (request: Request) => {
 
     } catch (error) {
       // Gère les erreurs de parsing JSON ou autres erreurs inattendues
-      console.error(`Erreur lors du traitement par lot des emails pour l'utilisateur ${userId}:`, error);
+      console.error(`Erreur lors du traitement par lot des emails pour l'utilisateur ${userId}:`, formatError(error));
       if (error?.message?.includes('invalid_grant')) {
         await telegramService.sendMessage(
           `Token expiré pour l'utilisateur ${userId}. \nURL d'authentification : \n${new OAuth2Service().getAuthUrl()}`

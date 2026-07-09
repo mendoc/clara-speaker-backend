@@ -1,6 +1,7 @@
 import { OAuth2Service } from "../../../services/OAuth2Service";
 import { DatabaseService } from "../../../services/DatabaseService";
 import { TelegramService } from "../../../services/TelegramService";
+import { formatError } from "../../../common/errors";
 
 const databaseService = new DatabaseService();
 const telegramService = new TelegramService();
@@ -27,7 +28,7 @@ export default async (request: Request) => {
 
   } catch (error) {
     // Gère les erreurs de parsing JSON ou autres erreurs inattendues
-    console.error("Erreur inattendue : ", error);
+    console.error("Erreur inattendue : ", formatError(error));
     return Response.json(
       { error: error.message },
       { status: 500 }
