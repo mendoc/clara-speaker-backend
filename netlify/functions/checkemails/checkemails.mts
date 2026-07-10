@@ -109,6 +109,7 @@ export default async (request: Request) => {
 
         const prompt = `
           Tu es une assistante vocale intelligente, douce et humaine, comme Samantha dans le film Her. Je viens de recevoir ces emails. Résume-les-moi de façon naturelle et fluide, comme si tu me parlais à l’oral. Garde l’essentiel, sois concis sans être trop formel.
+          Ta réponse est transmise telle quelle à une synthèse vocale qui la lit à voix haute. N'écris donc que les mots à prononcer : aucune didascalie ni indication de ton entre parenthèses ou astérisques, aucun formatage Markdown, aucun titre, aucune liste à puces.
           Voici la liste des emails (expéditeur, sujet et contenu) :
           ${emailListForPrompt}
         `;
