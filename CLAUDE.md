@@ -20,10 +20,11 @@ Il n'y a pas de suite de tests unitaires. `test.sh` est un simple test de fumée
 
 ## Architecture
 
-Trois fonctions Netlify (format v2 : `export default async (request: Request)` + `export const config = { path }`, sans `netlify.toml`) :
+Quatre fonctions Netlify (format v2 : `export default async (request: Request)` + `export const config = { path }`, sans `netlify.toml`) :
 
 - `netlify/functions/checkemails/checkemails.mts` → `POST /checkemails` — le cœur du système, déclenché par un cron externe.
-- `netlify/functions/oauth2callback/oauth2callback.mts` → `GET /oauth2callback` — récupère le refresh token Google et le stocke.
+- `netlify/functions/oauth2callback/oauth2callback.mts` → `GET /oauth2callback` — flux web : récupère le refresh token Google via redirection navigateur et le stocke.
+- `netlify/functions/oauth2exchange/oauth2exchange.mts` → `POST /oauth2/exchange` — flux mobile : reçoit `{ code }` (server auth code de l'app Android), l'échange contre un refresh token et le stocke sous l'ID Google déduit du token. Même mécanique que `oauth2callback`, mais ne réécrit pas un token existant si Google ne renvoie pas de `refresh_token`.
 - `netlify/functions/sendmessage/sendmessage.mts` → `POST /sendmessage` — envoi FCM manuel (`{ deviceToken, summary }`), utile pour déboguer.
 
 Les fonctions sont volontairement minces ; la logique vit dans `services/`, chaque service enveloppant un SDK externe :
