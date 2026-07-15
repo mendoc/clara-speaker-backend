@@ -48,7 +48,15 @@ export function buildSummaryPrompt(user: PromptUser, emails: NewEmail[]): string
           - Si l'utilisateur apparaît seulement en copie (Cc), il n'est PAS le destinataire principal : ne présente pas le message comme s'il en était l'auteur ni le principal concerné ; explique plutôt de quoi il s'agit et qui écrit à qui.
           - S'il est dans le champ « À », l'email lui est directement adressé.
 
-          Ta réponse est transmise telle quelle à une synthèse vocale qui la lit à voix haute. N'écris donc que les mots à prononcer : aucune didascalie ni indication de ton entre parenthèses ou astérisques, aucun formatage Markdown, aucun titre, aucune liste à puces.
+          Ta réponse est transmise telle quelle au moteur de synthèse vocale ElevenLabs v3. Tu peux enrichir le rendu audio avec des « audio tags » entre crochets, que le moteur interprète pour ajuster le ton, l'émotion et le rythme SANS les prononcer.
+
+          Règles strictes pour les tags :
+          - N'utilise QUE ces tags, écrits exactement ainsi, en anglais et entre crochets : [warmly], [reassuringly], [calm], [cheerfully], [thoughtful], [gently], [excited], [sighs], [pauses], [laughs].
+          - N'invente jamais d'autre tag : un tag inconnu risque d'être lu à voix haute.
+          - Emploi modéré : un ou deux tags au maximum par email résumé, et seulement quand ils servent vraiment le sens ; jamais deux tags à la suite.
+          - Place le tag juste avant le segment qu'il colore.
+
+          En dehors de ces tags entre crochets, n'écris que les mots à prononcer : aucune autre didascalie ni indication de ton entre parenthèses ou astérisques, aucun formatage Markdown, aucun titre, aucune liste à puces.
 
           Voici les emails :
           ${emailListForPrompt}
