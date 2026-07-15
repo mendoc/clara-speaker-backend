@@ -51,13 +51,31 @@ export class DatabaseService {
     await userRef.set(state, { merge: true });
   }
 
-  async getAllUsers(): Promise<Array<{ id: string, refreshToken: string, lastHistoryId?: string, fcmToken?: string }>> {
+  async getAllUsers(): Promise<UserRecord[]> {
     const usersRef = this.db.collection('clara_speaker_users');
     const snapshot = await usersRef.get();
-    const users: Array<{ id: string, refreshToken: string, lastHistoryId?: string, fcmToken?: string }> = [];
+    const users: UserRecord[] = [];
     snapshot.forEach(doc => {
-      users.push({ id: doc.id, ...doc.data() as { refreshToken: string, lastHistoryId?: string, fcmToken?: string } });
+      users.push({ id: doc.id, ...doc.data() as Omit<UserRecord, 'id'> });
     });
     return users;
   }
+}
+
+/**
+ * Un document utilisateur de la collection `clara_speaker_users`. Les champs de
+ * profil (email, prénom…) sont écrits par l'app Android après authentification et
+ * servent à personnaliser la synthèse ; ils peuvent être absents pour d'anciens comptes.
+ */
+export interface UserRecord {
+  id: string;
+  refreshToken: string;
+  lastHistoryId?: string;
+  fcmToken?: string;
+  email?: string;
+  givenName?: string;
+  familyName?: string;
+  displayName?: string;
+  photoUrl?: string;
+  locale?: string;
 }

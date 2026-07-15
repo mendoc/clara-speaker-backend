@@ -1,6 +1,14 @@
 
 import { google, Auth, gmail_v1 } from 'googleapis';
 
+export interface NewEmail {
+  from: string | null | undefined;
+  to: string | null | undefined;
+  cc: string | null | undefined;
+  subject: string | null | undefined;
+  body: string;
+}
+
 class GmailService {
   private gmail: gmail_v1.Gmail;
 
@@ -13,7 +21,7 @@ class GmailService {
     return profileResponse.data.historyId;
   }
 
-  async getNewEmails(lastHistoryId: string): Promise<{ newEmails: { from: string | null | undefined, subject: string | null | undefined, body: string }[], newHistoryId: string | null | undefined }> {
+  async getNewEmails(lastHistoryId: string): Promise<{ newEmails: NewEmail[], newHistoryId: string | null | undefined }> {
     const historyResponse = await this.gmail.users.history.list({
       userId: 'me',
       startHistoryId: lastHistoryId,
@@ -33,17 +41,21 @@ class GmailService {
       return { newEmails: [], newHistoryId };
     }
 
-    const unreadEmailsBatch: { from: string | null | undefined, subject: string | null | undefined, body: string }[] = [];
+    const unreadEmailsBatch: NewEmail[] = [];
     for (const messageId of newMessagesIds) {
       try {
         const msg = await this.gmail.users.messages.get({ userId: 'me', id: messageId, format: 'full' });
 
         if (msg.data.labelIds && msg.data.labelIds.includes('UNREAD') && !msg.data.labelIds.includes('SPAM')) {
           const headers = msg.data.payload?.headers;
+          const header = (name: string) =>
+            headers?.find((h: gmail_v1.Schema$MessagePartHeader) => h.name === name)?.value || null;
           const body = this.getEmailBody(msg.data.payload);
           unreadEmailsBatch.push({
-            from: headers?.find((h: gmail_v1.Schema$MessagePartHeader) => h.name === 'From')?.value || null,
-            subject: headers?.find((h: gmail_v1.Schema$MessagePartHeader) => h.name === 'Subject')?.value || null,
+            from: header('From'),
+            to: header('To'),
+            cc: header('Cc'),
+            subject: header('Subject'),
             body: body,
           });
         }

@@ -5,6 +5,7 @@ import { OAuth2Service } from "../../../services/OAuth2Service";
 import { DatabaseService } from "../../../services/DatabaseService";
 import { GmailService } from "../../../services/GmailService";
 import { geminiConfig } from "../../../common/config";
+import { buildSummaryPrompt } from "../../../common/prompt";
 import { formatError } from "../../../common/errors";
 
 
@@ -102,17 +103,9 @@ export default async (request: Request) => {
       // ÉTAPE DE SYNTHÈSE GLOBALE
       // =================================================================
       if (newEmails.length > 0) {
-        // On prépare une note de synthèse pour l'IA
-        const emailListForPrompt = newEmails
-          .map((email, index) => `${index + 1}. De: ${email.from}, Sujet: ${email.subject}\nContenu: ${email.body}`)
-          .join("\n\n");
-
-        const prompt = `
-          Tu es une assistante vocale intelligente, douce et humaine, comme Samantha dans le film Her. Je viens de recevoir ces emails. Résume-les-moi de façon naturelle et fluide, comme si tu me parlais à l’oral. Garde l’essentiel, sois concis sans être trop formel.
-          Ta réponse est transmise telle quelle à une synthèse vocale qui la lit à voix haute. N'écris donc que les mots à prononcer : aucune didascalie ni indication de ton entre parenthèses ou astérisques, aucun formatage Markdown, aucun titre, aucune liste à puces.
-          Voici la liste des emails (expéditeur, sujet et contenu) :
-          ${emailListForPrompt}
-        `;
+        // Le prompt intègre l'identité de l'utilisateur (pour le nommer et situer
+        // son rôle) et les en-têtes De/À/Cc de chaque email. Voir common/prompt.ts.
+        const prompt = buildSummaryPrompt(user, newEmails);
 
         // On fait UN SEUL appel à l'IA
         console.log("Envoi du batch à Gemini pour synthèse globale...");
