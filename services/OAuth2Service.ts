@@ -26,6 +26,23 @@ export class OAuth2Service {
     return await this.oauth2Client.getToken(code);
   }
 
+  /**
+   * Échange un server auth code issu de l'Authorization API mobile (requestOfflineAccess).
+   * Un tel code est émis SANS redirect_uri : l'échange doit donc se faire sans redirect_uri,
+   * sinon Google rejette avec invalid_grant. On utilise un client dédié construit sans
+   * redirectUri — passer `redirect_uri: ''` ne suffit pas, google-auth-library évalue
+   * `options.redirect_uri || this.redirectUri` et la chaîne vide (falsy) retombe sur le
+   * redirectUri du constructeur.
+   */
+  async exchangeMobileCode(code: string): Promise<{ tokens: Auth.Credentials, userInfo: oauth2_v2.Schema$Userinfo }> {
+    const client = new google.auth.OAuth2(gmailConfig.clientId, gmailConfig.clientSecret);
+    const { tokens } = await client.getToken(code);
+    client.setCredentials(tokens);
+    const oauth2 = google.oauth2({ auth: client, version: 'v2' });
+    const { data: userInfo } = await oauth2.userinfo.get();
+    return { tokens, userInfo };
+  }
+
   async getUserInfo(): Promise<oauth2_v2.Schema$Userinfo> {
     const oauth2 = google.oauth2({
       auth: this.oauth2Client,

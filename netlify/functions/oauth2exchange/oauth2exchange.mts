@@ -27,12 +27,11 @@ export default async (request: Request) => {
       );
     }
 
+    // Échange sans redirect_uri : le code mobile est émis sans, contrairement au flux web.
     const oauth2Service = new OAuth2Service();
-    const { tokens } = await oauth2Service.getToken(code);
-    oauth2Service.getOAuth2Client().setCredentials(tokens);
+    const { tokens, userInfo } = await oauth2Service.exchangeMobileCode(code);
 
     // L'ID Google déduit du token nomme le document Firestore : l'app n'a pas à l'envoyer.
-    const userInfo = await oauth2Service.getUserInfo();
     const userId = userInfo.id;
     if (!userId) {
       return Response.json(
